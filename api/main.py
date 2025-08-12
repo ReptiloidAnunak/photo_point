@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Request
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi import Form
@@ -7,7 +7,7 @@ from typing import Annotated
 
 from settings import TEMPLATES_DIR, TWILIO_AUTH_TOKEN, TWILIO_FROM_PHONE, TWILIO_SID
 from database.models import Message
-from tasks import send_mail_task, send_sms_task
+from tasks import send_mail_task, send_sms_task, send_tg_message_task
 from celery_app import celery_app
 
 
@@ -28,18 +28,25 @@ async def read_item(request: Request):
 @app.post("/send_message")
 async def send_message(request: Request, message: Annotated[str, Form()]):
     print(f"Received message: {message}")
+
+
     # task_mail = send_mail_task.delay(message)
     # print(f"Task ID: {task_mail.id}")
 
-    task_sms = send_sms_task.delay(
-    to_phone="+541133433412",
-    text=message,
-    sid=TWILIO_SID,
-    auth_token=TWILIO_AUTH_TOKEN,
-    from_phone=TWILIO_FROM_PHONE
-    )
-    print(f"Task ID: {task_sms.id}")
-    return templates.TemplateResponse("index.html", {"request": request, "message": message})
+    # task_sms = send_sms_task.delay(
+    # to_phone="+541133433412",
+    # text=message,
+    # sid=TWILIO_SID,
+    # auth_token=TWILIO_AUTH_TOKEN,
+    # from_phone=TWILIO_FROM_PHONE
+    # )
+    # print(f"Task ID: {task_sms.id}")
+
+
+    task_tg = send_tg_message_task.delay(message)
+    print(f"Task ID: {task_tg.id}")
+
+    return RedirectResponse(url="/", status_code=303)
 
 
 @app.get("/tasks/{task_id}")

@@ -5,8 +5,9 @@ from providers.email_provider import send_email
 from providers.sms_provider import send_sms
 from celery_app import celery_app
 
-from twilio.rest import Client
 from twilio.base.exceptions import TwilioRestException
+from providers.telegram_provider import send_telegram_ptb
+
 
 @celery_app.task(bind=True, autoretry_for=(TwilioRestException,), retry_backoff=True, retry_kwargs={"max_retries": 3})
 def send_sms_task(
@@ -32,3 +33,8 @@ def send_sms_task(
 @celery_app.task
 def send_mail_task(message: str = "Hello from Celery!"):
     send_email("test@example.com", "Hi", message)
+
+
+@celery_app.task
+def send_tg_message_task(text: str):
+    return send_telegram_ptb(text)
