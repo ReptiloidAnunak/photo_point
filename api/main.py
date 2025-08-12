@@ -3,7 +3,7 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi import Form
-from typing import Annotated
+from typing import Annotated, Optional, List
 
 from settings import TEMPLATES_DIR, TWILIO_AUTH_TOKEN, TWILIO_FROM_PHONE, TWILIO_SID
 from database.models import Message
@@ -26,9 +26,12 @@ async def read_item(request: Request):
 
 
 @app.post("/send_message")
-async def send_message(request: Request, message: Annotated[str, Form()]):
+async def send_message(request: Request, 
+                       message: Annotated[str, Form()],
+                       providers: Annotated[Optional[List[str]], Form(None)],
+                       ):
     print(f"Received message: {message}")
-
+    print(f"Selected providers: {providers}")
 
     # task_mail = send_mail_task.delay(message)
     # print(f"Task ID: {task_mail.id}")

@@ -44,6 +44,16 @@ main {
     border-radius: 20px;
 }
 
+#sel-providers {
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(253, 253, 253);
+}
+
+.notification-provider span {
+    font-size: 20px;
+}
+
 #btn-send {
     background-color: chartreuse;
     color: black;
@@ -60,6 +70,5 @@ main {
     background-color: green;
     color: #ffe600;
     font-size: 20px;
-
 }
 

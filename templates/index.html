@@ -23,6 +23,20 @@
                         placeholder="Enter your message here"
                         ></textarea>
                     </div>
+                    <div id="sel-providers">
+                        <div class="notification-provider">
+                        <input type="checkbox" id="sms-check" name="providers" value="sms">
+                        <label for="sms-check">SMS</label>
+                        </div>
+                        <div class="notification-provider">
+                        <input type="checkbox" id="mail-check" name="providers" value="email">
+                        <label for="mail-check">Email</label>
+                        </div>
+                        <div class="notification-provider">
+                        <input type="checkbox" id="tg-check" name="providers" value="telegram">
+                        <label for="tg-check">Telegram</label>
+                        </div>
+                    </div>
                     <button type="submit" id="btn-send">Send</button>
                 </form>
             </div>

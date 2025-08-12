@@ -1,3 +1,6 @@
 fastapi[standard]
 celery[redis]
 python-telegram-bot==22.3
+twilio==9.7.0
+python-dotenv==1.1.1
+
