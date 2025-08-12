@@ -28,26 +28,34 @@ async def read_item(request: Request):
 @app.post("/send_message")
 async def send_message(request: Request, 
                        message: Annotated[str, Form()],
-                       providers: Annotated[Optional[List[str]], Form(None)],
+                       providers: Annotated[Optional[List[str]], Form()],
                        ):
     print(f"Received message: {message}")
     print(f"Selected providers: {providers}")
 
-    # task_mail = send_mail_task.delay(message)
-    # print(f"Task ID: {task_mail.id}")
 
-    # task_sms = send_sms_task.delay(
-    # to_phone="+541133433412",
-    # text=message,
-    # sid=TWILIO_SID,
-    # auth_token=TWILIO_AUTH_TOKEN,
-    # from_phone=TWILIO_FROM_PHONE
-    # )
-    # print(f"Task ID: {task_sms.id}")
+    providers_lst = ['sms', 'email', 'telegram']
+    for provider in providers:
+        if provider not in providers_lst:
+            return {"error": f"Invalid provider: {provider}"}
+        
+        if provider == 'email':
+            task_mail = send_mail_task.delay(message)
+            print(f"Task_mail ID: {task_mail.id}")
 
+        if provider == 'sms':
+            task_sms = send_sms_task.delay(
+            to_phone="+541133433412",
+            text=message,
+            sid=TWILIO_SID,
+            auth_token=TWILIO_AUTH_TOKEN,
+            from_phone=TWILIO_FROM_PHONE
+            )
+            print(f"Task_phone ID: {task_sms.id}")
 
-    task_tg = send_tg_message_task.delay(message)
-    print(f"Task ID: {task_tg.id}")
+        if provider == 'telegram':
+            task_tg = send_tg_message_task.delay(message)
+            print(f"Task ID: {task_tg.id}")
 
     return RedirectResponse(url="/", status_code=303)
 

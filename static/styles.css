@@ -47,7 +47,7 @@ main {
 #sel-providers {
     display: flex;
     flex-direction: column;
-    background-color: rgb(253, 253, 253);
+    background-color: rgba(140, 213, 255, 0.644);
 }
 
 .notification-provider span {
