@@ -34,7 +34,10 @@ async def post_register_user(request: Request,
 
 
 @app.get("/", response_class=HTMLResponse)
-async def read_item(request: Request):
+async def index(request: Request):
+    users = get_all_users()
+    if not users:
+            return RedirectResponse(url="/register", status_code=303)
     return templates.TemplateResponse("index.html", {"request": request})
 
 

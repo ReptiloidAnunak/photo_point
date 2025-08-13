@@ -52,7 +52,10 @@
             button:hover {
                 background: #0056b3;
             }
-
+            h1, h2 {
+                text-align: center;
+                margin-top: 20px;
+            }
             h1 {
                 text-align: center;
             }
@@ -60,6 +63,13 @@
         </style>
     </head>
     <body>
+        <div class="page-headers" style="margin-top: 20px">
+            <div style="text-align: center;"><h1>Photo Point</h1></div>
+        </div>
+        <div>
+            <h2>Notifications server</h2>
+        </div>
+        
         <h1>Register</h1>
         <form action="/register_user" method="post">
             <label for="username">Username:</label>
@@ -71,7 +81,7 @@
             <button type="submit">Register</button>
         </form>
         <div style='background-color: rgba(1, 26, 26, 0.842); color: #ccc; padding: 10px; margin-top: 20px; border-radius: 8px;'>
-            <p>Sent "/start" to @photo_point_my_bot in Telegram </p>
+            <div>Send "/start" to <a href="https://t.me/photo_point_my_bot" style="color: rgba(5, 241, 84, 0.84); text-decoration: none;">@photo_point_my_bot</a> in Telegram after registration</div>
         </div>
     </body>
 </html>
