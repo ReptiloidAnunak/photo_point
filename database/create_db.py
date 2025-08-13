@@ -1,43 +1,12 @@
 
 from __future__ import annotations
 import os
-from typing import Optional, Iterable
+from typing import Optional
 import sqlite3
-from sqlmodel import SQLModel, Field, Session, create_engine, select
-from sqlalchemy import Column, Integer, String, Boolean, event
+from sqlmodel import SQLModel, Session, create_engine, select
+from sqlalchemy import event
 from settings import DATABASE_URL
-
-class User(SQLModel, table=True):
-    __tablename__ = "user"
-
-    id: Optional[int] = Field(default=None, primary_key=True)
-
-    tg_chat_id: Optional[int] = Field(
-        default=None,
-        sa_column=Column(Integer, unique=True, index=True, nullable=True),
-        description="chat_id лички; None если не известен",
-    )
-
-    username: Optional[str] = Field(
-        default=None,
-        sa_column=Column(String, unique=True, nullable=False),
-    )
-
-    phone: Optional[str] = Field(
-        default=None,
-        sa_column=Column(String, unique=True, nullable=False),
-    )
-    email: Optional[str] = Field(
-        default=None,
-        sa_column=Column(String, unique=True, nullable=False),
-    )
-
-    tg_chat_is_blocked: bool = Field(
-        default=False,
-        sa_column=Column(Boolean, nullable=False),
-        description="1 = заблокировал бота / chat not found",
-    )
-
+from database.models import User
 
 def _sqlite_url(db: str) -> str:
     return db if db.startswith("sqlite:///") else f"sqlite:///{db}"
@@ -82,39 +51,26 @@ def register_user(username: str, email: str, phone: str) -> User:
             s.refresh(user)
         return user
 
-def upsert_chat(tg_chat_id: int, username: Optional[str] = None) -> User:
 
+def get_user_by_username(username: str) -> Optional[User]:
     with get_session() as s:
-        user = s.exec(select(User).where(User.tg_chat_id == tg_chat_id)).one_or_none()
-        if user is None:
-            user = User(tg_chat_id=tg_chat_id, username=username, tg_chat_is_blocked=False)
-            s.add(user)
-        else:
-            if username and not user.username:
-                user.username = username
-            user.tg_chat_is_blocked = False
-        s.commit()
-        s.refresh(user)
-        return user
-
-def mark_blocked(tg_chat_id: int) -> None:
-    with get_session() as s:
-        user = s.exec(select(User).where(User.tg_chat_id == tg_chat_id)).one_or_none()
+        user = s.exec(select(User).where(User.username == username)).one_or_none()
         if user:
-            user.tg_chat_is_blocked = True
+            return user
+
+        
+
+def set_user_tg_chat_id(username: str, tg_chat_id: int) -> Optional[User]:
+    with get_session() as s:
+        user = s.exec(select(User).where(User.username == username)).one_or_none()
+        if user:
+            user.tg_chat_id = tg_chat_id
             s.add(user)
             s.commit()
-
-def list_active_ids() -> list[int]:
-    with get_session() as s:
-        rows: Iterable[int] = s.exec(
-            select(User.tg_chat_id).where(
-                User.tg_chat_is_blocked == False,
-                User.tg_chat_id.is_not(None)
-            )
-        )
-        return [cid for cid in rows if cid is not None]
-    
+            s.refresh(user)
+            return user
+        else:
+            return None
 
 def get_all_users() -> list[User]:
     with get_session() as s:

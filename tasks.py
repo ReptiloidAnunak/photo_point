@@ -39,5 +39,5 @@ def send_mail_task(message: str = "Hello from Celery!"):
 
 
 @celery_app.task
-def send_tg_message_task(text: str):
-    return send_telegram_ptb(text)
+def send_tg_message_task(text: str, tg_chat_id: int) -> dict:
+    return send_telegram_ptb(text, tg_chat_id)
