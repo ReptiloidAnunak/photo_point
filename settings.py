@@ -7,6 +7,18 @@ load_dotenv()
 from pathlib import Path
 
 BASE_DIR = Path(__file__).parent
+
+
+DATABASE_DIR = BASE_DIR / "database"
+DATABASE = DATABASE_DIR / "app.db"
+DATABASE_URL = 'sqlite:///database/app.db'
+
+
+if not os.path.exists(DATABASE):
+    with open(DATABASE, 'w'):
+        pass
+
+
 TEMPLATES_DIR = BASE_DIR / "templates"
 
 TWILIO_AUTH_TOKEN = os.getenv("TWILIO_AUTH_TOKEN")

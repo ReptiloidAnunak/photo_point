@@ -1,11 +1,11 @@
-# providers/email_provider.py
+
 import smtplib
 from email.message import EmailMessage
 
 def send_email(
-    to_email: str,
     subject: str,
     text: str,
+    to_email: str = "test@example.com",
     smtp_host: str = "127.0.0.1",
     smtp_port: int = 1025,                  
     smtp_from: str = "no-reply@example.com",
@@ -13,6 +13,7 @@ def send_email(
     smtp_pass: str | None = None,
     use_tls: bool = False,
 ) -> None:
+    
     msg = EmailMessage()
     msg["From"] = smtp_from
     msg["To"] = to_email

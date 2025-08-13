@@ -29,6 +29,9 @@ wheels/
 .installed.cfg
 *.egg
 MANIFEST
+*.db
+*.db-shm
+*.db-wal
 
 # Virtual environments
 venv/

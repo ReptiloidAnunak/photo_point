@@ -32,7 +32,10 @@ def send_sms_task(
 
 @celery_app.task
 def send_mail_task(message: str = "Hello from Celery!"):
-    send_email("test@example.com", "Hi", message, smtp_host="mailhog", smtp_port=1025)
+    send_email("Hi", 
+               message, 
+               smtp_host="mailhog", 
+               smtp_port=1025)
 
 
 @celery_app.task
