@@ -20,6 +20,8 @@ If one channel fails, the worker **falls back** to the next (configurable order)
 git clone https://github.com/ReptiloidAnunak/photo_point
 cd photo_point
 ```
+Put your .env file into the project`s root
+
 ### 3) Run app
 Put .env file with your evrinonment into the project`s root (see env-ex)
 
