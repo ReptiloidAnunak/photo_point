@@ -48,6 +48,9 @@ async def send_message(request: Request,
     users = get_all_users()
     print(f"Registered users: {users}")
 
+    if len(providers) == 0:
+        return RedirectResponse(url="/", status_code=303)
+
     for user in users:
         payload = {
             "email": user.email,
@@ -56,7 +59,6 @@ async def send_message(request: Request,
             "twilio_sid": TWILIO_SID,
             "twilio_auth_token": TWILIO_AUTH_TOKEN,
             "twilio_from_phone": TWILIO_FROM_PHONE,
-            # "twilio_messaging_service_sid": TWILIO_MS_SID,  # если используешь
         }
         send_with_fallback.delay(message, payload, providers)
     return RedirectResponse(url="/", status_code=303)

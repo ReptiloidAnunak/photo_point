@@ -21,22 +21,32 @@
                         rows="20"
                         cols="90"
                         placeholder="Enter your message here"
+                        required
                         ></textarea>
                     </div>
-                    <div id="sel-providers">
-                        <div class="notification-provider">
-                        <input type="checkbox" id="sms-check" name="providers" value="sms" checked>
-                        <label for="sms-check">SMS</label>
+                    <div id="sel-providers" style="color: #000; background-color: #c3ee72c5; display: flex; flex-direction: column; align-items: center; padding: 10px; border-radius: 8px; margin-top: 20px; width: 70%;">
+                        <div>
+                            <h3>Channels</h3>
                         </div>
-                        <div class="notification-provider">
-                        <input type="checkbox" id="mail-check" name="providers" value="email" checked>
-                        <label for="mail-check">Email</label>
+                        <div style="margin-bottom: 10px;">
+                            <p>Choose possible channels for notifications. The more channels, the more likely delivery</p>
                         </div>
-                        <div class="notification-provider">
-                        <input type="checkbox" id="tg-check" name="providers" value="telegram" checked>
-                        <label for="tg-check">Telegram</label>
+                        <div style="display: flex; flex-direction: row; align-items: center; gap: 30px;">
+                            <div class="notification-provider" style="display: flex; align-items: center; gap: 8px;">
+                                <input type="checkbox" id="sms-check" name="providers" value="sms" checked class="provider-checkbox">
+                                <label for="sms-check" class="provider-label">SMS</label>
+                            </div>
+                            <div class="notification-provider" style="display: flex; align-items: center; gap: 8px;">
+                                <input type="checkbox" id="mail-check" name="providers" value="email" checked class="provider-checkbox">
+                                <label for="mail-check" class="provider-label">Email</label>
+                            </div>
+                            <div class="notification-provider" style="display: flex; align-items: center; gap: 8px;">
+                                <input type="checkbox" id="tg-check" name="providers" value="telegram" checked class="provider-checkbox">
+                                <label for="tg-check" class="provider-label">Telegram</label>
+                            </div>
                         </div>
                     </div>
+                    <br>
                     <button type="submit" id="btn-send">Send</button>
                 </form>
             </div>

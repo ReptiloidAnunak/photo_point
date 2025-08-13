@@ -47,7 +47,8 @@ main {
 #sel-providers {
     display: flex;
     flex-direction: column;
-    background-color: rgba(140, 213, 255, 0.644);
+    background-color: rgba(217, 226, 135, 0.644);
+    color: #000;
     width: 70%;
 }
 

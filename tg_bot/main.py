@@ -12,7 +12,7 @@ async def check_site_username_in_db(update: Update, context: ContextTypes.DEFAUL
 
     if user:
         set_user_tg_chat_id(user.username, update.message.chat_id)
-        await update.message.reply_text(f'Hello, {user.username}! Your email is {user.email}\nYour phone is {user.phone}.\nYou`ll receive our notifications.')
+        await update.message.reply_text(f'Hello, {user.username}!\nYou`ll receive our notifications.')
     else:
         await update.message.reply_text(f'User with username {update.message.text} not found in the database. Please register first.')
 
