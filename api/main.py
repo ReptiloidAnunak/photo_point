@@ -8,8 +8,8 @@ from typing import Annotated, Optional, List
 from settings import TEMPLATES_DIR
 from database.create_db import register_user, get_all_users
 from celery_app import celery_app
-from api.send_notifications import send_notification
-
+from tasks import send_with_fallback
+from settings import TWILIO_SID, TWILIO_AUTH_TOKEN, TWILIO_FROM_PHONE
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -49,8 +49,17 @@ async def send_message(request: Request,
     print(f"Registered users: {users}")
 
     for user in users:
-        await send_notification(message, user, providers)
-        return RedirectResponse(url="/", status_code=303)
+        payload = {
+            "email": user.email,
+            "phone": user.phone,
+            "tg_chat_id": getattr(user, "tg_chat_id", None),
+            "twilio_sid": TWILIO_SID,
+            "twilio_auth_token": TWILIO_AUTH_TOKEN,
+            "twilio_from_phone": TWILIO_FROM_PHONE,
+            # "twilio_messaging_service_sid": TWILIO_MS_SID,  # если используешь
+        }
+        send_with_fallback.delay(message, payload, providers)
+    return RedirectResponse(url="/", status_code=303)
 
 
 @app.get("/tasks/{task_id}")

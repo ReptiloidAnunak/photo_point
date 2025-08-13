@@ -2,7 +2,7 @@
 
 <html lang="en">
     <head>
-    <title>Photo Point</title>
+        <title>Photo Point</title>
         <link href="{{ url_for('static', path='/styles.css') }}" rel="stylesheet">
     </head>
     <body>
@@ -25,15 +25,15 @@
                     </div>
                     <div id="sel-providers">
                         <div class="notification-provider">
-                        <input type="checkbox" id="sms-check" name="providers" value="sms">
+                        <input type="checkbox" id="sms-check" name="providers" value="sms" checked>
                         <label for="sms-check">SMS</label>
                         </div>
                         <div class="notification-provider">
-                        <input type="checkbox" id="mail-check" name="providers" value="email">
+                        <input type="checkbox" id="mail-check" name="providers" value="email" checked>
                         <label for="mail-check">Email</label>
                         </div>
                         <div class="notification-provider">
-                        <input type="checkbox" id="tg-check" name="providers" value="telegram">
+                        <input type="checkbox" id="tg-check" name="providers" value="telegram" checked>
                         <label for="tg-check">Telegram</label>
                         </div>
                     </div>
