@@ -7,11 +7,11 @@ def send_email(
     subject: str,
     text: str,
     smtp_host: str = "127.0.0.1",
-    smtp_port: int = 1025,                   # MailHog по умолчанию
+    smtp_port: int = 1025,                  
     smtp_from: str = "no-reply@example.com",
     smtp_user: str | None = None,
     smtp_pass: str | None = None,
-    use_tls: bool = False,                   # для MailHog не нужно
+    use_tls: bool = False,
 ) -> None:
     msg = EmailMessage()
     msg["From"] = smtp_from
