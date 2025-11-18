@@ -14,6 +14,8 @@ def send_email(
     use_tls: bool = False,
 ) -> None:
     
+    
+    
     msg = EmailMessage()
     msg["From"] = smtp_from
     msg["To"] = to_email

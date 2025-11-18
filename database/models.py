@@ -1,9 +1,13 @@
 
 
-from typing import Optional
+from typing import Optional, Annotated
 from sqlmodel import SQLModel, Field
 from sqlalchemy import Column, Integer, String, Boolean
 
+from fastapi import Depends
+from fastapi.security import OAuth2PasswordBearer
+
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 class User(SQLModel, table=True):
     __tablename__ = "user"
@@ -35,3 +39,16 @@ class User(SQLModel, table=True):
         sa_column=Column(Boolean, nullable=False),
         description="1 = заблокировал бота / chat not found",
     )
+
+    disabled: bool | None = Field(default=False,
+                                  sa_column=Column(Boolean, nullable=False)
+    )   
+
+    def fake_decode_token(token):
+        return User(
+            username=token + 'fakedecoded', email="john@example.com", full_name="John Doe"
+        )
+    
+    async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
+        user = fake_decode_token(token)
+        return user

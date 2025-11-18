@@ -1,8 +1,10 @@
 fastapi[standard]
+pyjwt
 celery[redis]
 python-telegram-bot==22.3
 twilio==9.7.0
 python-dotenv==1.1.1
 sqlmodel==0.0.24
 sqlalchemy==2.0.43
+itsdangerous
 

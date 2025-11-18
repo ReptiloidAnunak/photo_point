@@ -72,3 +72,29 @@ main {
     font-size: 20px;
 }
 
+#tasks_res_tables {
+    background-color: aliceblue;
+    padding: 20px
+}
+
+#tasks_res_tables a {
+    text-decoration: none;
+}
+
+.task_table_str {
+    display: flex;
+    flex-direction: row;
+}
+
+.task_table_str:hover {
+    background-color: rgba(0, 19, 0, 0.486)
+}
+
+.task_cell {
+    width: 200px;
+    border-radius: 3px;
+    border-style: solid;
+    align-content: center;
+    text-align: center;
+    padding: 20px
+}

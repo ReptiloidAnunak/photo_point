@@ -35,6 +35,8 @@ App UI: http://localhost:8000
 
 MailHog (dev inbox): http://localhost:8025
 
+Registration of new user (id db does not exists redirect to registrarion). Also you can add new user by link: http://localhost:8000/register 
+
 Follow instructions and send your notifiction
 
 Сheck SMS in your phone, MailHog and chat with @photo_point_first_bot

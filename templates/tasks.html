@@ -1,0 +1,39 @@
+<html lang="en">
+<head>
+    <title>Tasks</title>
+    <link href="{{ url_for('static', path='/styles.css') }}" rel="stylesheet">
+</head>
+<body>
+    <main>
+        <h1>Tasks</h1>
+        <div id="tasks_res_tables">
+            {% if tasks %}
+
+                {% for task in tasks %}
+                    <a href="{{ url_for('get_task_status', task_id=task) }}">
+
+                        <div class="task_table_str">
+                                <div class="task_cell" style="background-color: yellow">
+                                    {{ task.task_id }}
+                                </div>
+                                <div class="task_cell">
+                                    {{ task.message }}
+                                </div>
+                                <div class="task_cell">
+                                    {{ task.username }}
+                                </div>
+                                <div class="task_cell">
+                                    {{ task.status }}
+                                </div>
+                        </div>
+                        
+                    </a>
+                {% endfor %}
+
+            {% else %}
+                <p>No tasks yet.</p>
+            {% endif %}
+        </div>
+    </main>
+</body>
+</html>

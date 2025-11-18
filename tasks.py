@@ -17,6 +17,7 @@ class SkipChannel(Exception):
     soft_time_limit=20, time_limit=30,
     name="tasks.send_with_fallback",
 )
+
 def send_with_fallback(self, message: str, user: dict, providers: list[str]) -> dict:
     last_err = None
 
@@ -46,7 +47,7 @@ def send_with_fallback(self, message: str, user: dict, providers: list[str]) -> 
                 to = user.get("email")
                 if not to:
                     continue
-                send_email(to, "Photo Point Notification", message, smtp_host="mailhog", smtp_port=1025)
+                send_email("Photo Point Notification", message, to,  smtp_host="mailhog", smtp_port=1025)
                 return {"status": "SENT", "channel": "email"}
 
             else:
